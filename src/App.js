@@ -4,13 +4,13 @@ import RecipeList from "./RecipeList";
 
 function App() {
   const [mealData, setMealData] = useState(null);
-  const [calories, setCalories] = useState(2000);
+  const [diet, setDiet] = useState(null);
   const [recipeData, setRecipeData] = useState(null);
   const [ingredientsList, setIngredients] = useState('apples,+flour,+sugar');
 
   function getMealData() {
     fetch(
-      `https://api.spoonacular.com/mealplanner/generate?apiKey=9a878085a2e042e3a954c4f18d8ca637&timeFrame=day&targetCalories=${calories}`
+      `https://api.spoonacular.com/mealplanner/generate?apiKey=9a878085a2e042e3a954c4f18d8ca637&timeFrame=day&diet=${diet}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -22,7 +22,7 @@ function App() {
   }
 
   function handleChange(e) {
-    setCalories(e.target.value);
+    setDiet(e.target.value);
   }
 
   function getRecipeData() {
@@ -46,14 +46,15 @@ function App() {
     <div className="App">
       <section className="controls">
         <input
-          type="number"
-          placeholder="Calories (e.g. 2000)"
+          type="text"
+          placeholder="Diet (e.g. vegan)"
           onChange={handleChange}
         />
         <button onClick={getMealData}>Get Daily Meal Plan</button>
+      </section>
+      {mealData && <MealList mealData={mealData} />}
 
-{mealData && <MealList mealData={mealData} />}
-
+      <section className="controls">
         <input
           type="text"
           placeholder="Ingredients (e.g. apples, flour, sugar)"
@@ -61,9 +62,6 @@ function App() {
         />
         <button onClick={getRecipeData}>Get Recipe</button>
       </section>
-
-      
-
       {recipeData && <RecipeList recipeData={recipeData} />}
     </div>
   );
