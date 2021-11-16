@@ -22,7 +22,7 @@ function App() {
   }
 
   function handleChange(e) {
-    setDiet(e.target.value);
+    setDiet(e.target.value.toLowerCase());
   }
 
   function getRecipeData() {
