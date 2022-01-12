@@ -1,5 +1,9 @@
+import AppNavbar from "../../components/navbar"
+
 export default function HomePage() {
-  return (
+  return (<>
+    <AppNavbar />
     <p>home page</p>
+  </>
   )
 }

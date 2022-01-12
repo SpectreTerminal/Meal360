@@ -1,12 +1,20 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import HomePage from '../pages/Home';
 import LoginPage from '../pages/Login';
+import ProfilePage from '../pages/Profile';
+import DietaryRestrictionsPage from '../pages/DietaryRestrictions';
+import WeeklyMealPlanPage from '../pages/WeeklyMealPlan';
+import MealHistoryPage from '../pages/MealHistory';
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route path='/' element={<HomePage />} />
       <Route path='/login' element={<LoginPage />} />
+      <Route path='/profile' element={<ProfilePage />} />
+      <Route path='/dietaryRestrictions' element={<DietaryRestrictionsPage />} />
+      <Route path='/weeklyMealPlan' element={<WeeklyMealPlanPage />} />
+      <Route path='/mealHistory' element={<MealHistoryPage />} />
     </Routes>
   )
 }
