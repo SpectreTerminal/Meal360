@@ -1,7 +1,9 @@
 import FileReader from 'fs';
 import fetch from 'node-fetch';
 
-const _key = FileReader.readFileSync('apiKey.txt', 'utf8');
+// TODO: Note: Filepath changes depending on current directory... might need a way to improve this.
+// Is there a way to make this privately accessible?
+const _key = FileReader.readFileSync('./apiKey.txt', 'utf8');
 
 /**
  * Send information to the requested API with parameters. Returns a Promise object. 
@@ -22,7 +24,7 @@ export const sendToAPI = (url, params) => {
  * Send information to database. TODO stub method.
  * 
  * @param {object} params 
- * @returns 
+ * @returns ???
  */
 export const sendToDB = params => {
     return null;
