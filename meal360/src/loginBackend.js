@@ -1,35 +1,26 @@
-import { sendToAPI, sendToDB } from "./extCommMod.js";
+import { getFromDB, postDB } from "./extCommMod.js";
 
 /**
- * Temporary stub method to get authentication from the database.
+ * Authenticate a user.
  * 
  * @param {object} login Login information
- * @returns ???
+ * @returns {boolean} True if authentication is successful, false otherwise
  */
-export const getAuthentication = (login) => {
-    return sendToDB(null);
+export const authenticateUser = async (username, password) => {
+    const credentials = await getFromDB("accounts", username).data();
+    return (username === credentials && password === credentials.password);
 }
 
-// Test stub method
-export const genMealPlan = async () => {
-    const genMealPlanURL = 'https://api.spoonacular.com/mealplanner/generate';
-
-    // note: no API key, that's the fetch test's responsibility
+/**
+ * Register a new user.
+ * 
+ * @param {string} username Username - acts as user's unique identifier
+ * @param {string} email User's email
+ * @param {string} password User's password
+ */
+export const registerUser = async (username, email, password) => {
     const params = {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        timeFrame: 'day',
-        targetCalories: 2000,
-        diet: 'vegetarian'
-        // exclude: ['shellfish', 'olives']
-    }
-
-    let response = await sendToAPI(genMealPlanURL, params);
-    let meals = response.meals;
-    for(let i = 0; i < meals.length; i++){
-        console.log(meals[i]);
-    }
+        username, email, password
+    };
+    await postDB("accounts", username, params);
 }
-
-genMealPlan();
