@@ -5,6 +5,7 @@ import ProfilePage from '../pages/Profile';
 import DietaryRestrictionsPage from '../pages/DietaryRestrictions';
 import WeeklyMealPlanPage from '../pages/WeeklyMealPlan';
 import MealHistoryPage from '../pages/MealHistory';
+import RecipePage from '../pages/WeeklyMealPlan/Recipe';
 
 export default function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ export default function AppRoutes() {
       <Route path='/dietaryRestrictions' element={<DietaryRestrictionsPage />} />
       <Route path='/weeklyMealPlan' element={<WeeklyMealPlanPage />} />
       <Route path='/mealHistory' element={<MealHistoryPage />} />
+      <Route path='/recipe' element={<RecipePage />} />
     </Routes>
   )
 }

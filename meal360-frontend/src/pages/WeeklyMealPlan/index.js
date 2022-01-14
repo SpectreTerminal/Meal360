@@ -363,24 +363,39 @@ export default function WeeklyMealPlanPage() {
               <Card.Subtitle>{meal.date}</Card.Subtitle>
             </Card.Body>
           </Card>
-          <Card style={{width: '15rem'}}>
-            <Card.Body>
-              <Card.Title>{meal.breakfast.name}</Card.Title>
-              <Card.Subtitle>Breakfast</Card.Subtitle>
-            </Card.Body>
-          </Card>
-          <Card style={{width: '15rem'}}>
-            <Card.Body>
-              <Card.Title>{meal.lunch.name}</Card.Title>
-              <Card.Subtitle>Lunch</Card.Subtitle>
-            </Card.Body>
-          </Card>
-          <Card style={{width: '15rem'}}>
-            <Card.Body>
-              <Card.Title>{meal.dinner.name}</Card.Title>
-              <Card.Subtitle>Dinner</Card.Subtitle>
-            </Card.Body>
-          </Card>
+          <Link to='/recipe' 
+            style={{textDecoration: 'none', color: 'inherit'}}
+            state={{ meal: meal.breakfast }}  
+          >
+            <Card style={{width: '15rem'}}>
+              <Card.Body>
+                <Card.Title>{meal.breakfast.name}</Card.Title>
+                <Card.Subtitle>Breakfast</Card.Subtitle>
+              </Card.Body>
+            </Card>
+          </Link>
+          <Link to='/recipe' 
+            style={{textDecoration: 'none', color: 'inherit'}}
+            state={{ meal: meal.lunch }}  
+          >
+            <Card style={{width: '15rem'}}>
+              <Card.Body>
+                <Card.Title>{meal.lunch.name}</Card.Title>
+                <Card.Subtitle>Lunch</Card.Subtitle>
+              </Card.Body>
+            </Card>
+          </Link>
+          <Link to='/recipe' 
+            style={{textDecoration: 'none', color: 'inherit'}}
+            state={{ meal: meal.dinner }}  
+          >
+            <Card style={{width: '15rem'}}>
+              <Card.Body>
+                <Card.Title>{meal.dinner.name}</Card.Title>
+                <Card.Subtitle>Dinner</Card.Subtitle>
+              </Card.Body>
+            </Card>
+          </Link>
         </Col>))}
       </Row>
     </Container>
