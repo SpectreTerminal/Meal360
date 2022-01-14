@@ -3,16 +3,7 @@ import { Link } from "react-router-dom";
 
 import AppNavbar from "../../components/navbar";
 
-var calorieValue
-
-function CalorieRange(event) {
-    console.log(event.target.value)
-    calorieValue = event.target.value
-} 
-
 export default function DietaryRestrictionsPage() {
-  var calorieValue = 0
-
   return (<>
     <AppNavbar active={'dietaryRestrictions'}/>
 
