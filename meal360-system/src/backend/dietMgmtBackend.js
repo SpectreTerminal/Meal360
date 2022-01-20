@@ -6,12 +6,15 @@ import { getFromDB, postDB } from "./extCommMod.js";
  * Example: **let response = await sendNewPrefs(...)**
  * 
  * @param {object} userParams User's new preferences
- * @param {string} id User's identifier
- * @returns {DocumentSnapshot<DocumentData>} User's current preferences
+ * @param {string} id The user's identifier, usually their email.
+ * @returns {object} User's current preferences
  */
-export const sendNewPrefs = (userParams, id) => {
-    postDB("dietPref", id, userParams);
-    return getFromDB("dietPref", id);
+export const sendNewPrefs = async (userParams, id) => {
+    // POST information
+    await postDB("dietPref", id, userParams);
+    
+    // return the information
+    return await getPrefs(id);
 }
 
 /**
@@ -19,20 +22,12 @@ export const sendNewPrefs = (userParams, id) => {
  * Ensure that all calls made to this function use the **await** keyword.
  * Example: **let response = await getPrefs(...)**
  * 
- * @param {string} id User's identifier
- * @returns {DocumentSnapshot<DocumentData>} Query response
+ * @param {string} email User's email, the identifier
+ * @returns {object} User's dietary preferences, as a JSON object literal
  */
-export const getPrefs = id => getFromDB("dietPref", id);
-
-
-// TEST Stub
-// const testData = {
-//     dietType: "vegan",
-//     exclude: ["olives"],
-//     targetCalories: 500,
-//     user: "test"
-// }
-// await sendNewPrefs(testData, "dietPref");
-// const r2 = await getPrefs("dietPref");
-// console.log(r2.id);
-// console.log(r2.data());
+export const getPrefs = async id => {
+    const response = await getFromDB("dietPref", ["email"], ["=="], [id]);
+    const docs = response.docs;
+    const data = docs[0].data();
+    return data;
+}
