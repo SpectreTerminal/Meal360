@@ -3,24 +3,26 @@ import { getFromDB, postDB } from "./extCommMod.js";
 /**
  * Authenticate a user.
  * 
- * @param {object} login Login information
+ * @param {string} email Email by user
+ * @param {string} password Password entered by user
  * @returns {boolean} True if authentication is successful, false otherwise
  */
-export const authenticateUser = async (username, password) => {
-    const credentials = await getFromDB("accounts", username).data();
-    return (username === credentials && password === credentials.password);
+export const authenticateUser = async (email, password) => {
+    const response = await getFromDB("accounts", ['email'], ['=='], [email]);
+    const docs = response.docs;
+    const credentials = docs[0].data();
+    return (email === credentials.email && password === credentials.password);
 }
 
 /**
  * Register a new user.
  * 
- * @param {string} username Username - acts as user's unique identifier
  * @param {string} email User's email
  * @param {string} password User's password
  */
-export const registerUser = async (username, email, password) => {
+export const registerUser = async (email, password) => {
     const params = {
-        username, email, password
+        email, password
     };
-    await postDB("accounts", username, params);
+    await postDB("accounts", email, params);
 }
