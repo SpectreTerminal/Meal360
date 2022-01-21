@@ -1,7 +1,26 @@
-import { Button, Navbar, Nav, Container, Card, Form } from "react-bootstrap";
+import { Button, Navbar, Container, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { authenticateUser } from '../../backend/loginBackend.js'
+
 export default function LoginPage() {
+
+  let email = "";
+  let password = "";
+  function handleLogIn() {
+    console.log(email)
+    console.log(password)
+  }
+
+  function updateEmail(event) {
+    email = event.target.value
+  }
+
+  function updatePassword(event) {
+    password = event.target.value
+  }
+
+
   return (<>
     <Navbar bg="primary" variant="dark">
       <Container>
@@ -15,7 +34,7 @@ export default function LoginPage() {
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Control type="email" placeholder="Enter email" onChange={updateEmail}/>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -23,10 +42,10 @@ export default function LoginPage() {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control type="password" placeholder="Password" onChange={updatePassword}/>
         </Form.Group>
         <Link to='/'>
-          <Button variant='primary' type='submit'>Login</Button>
+          <Button variant='primary' type='submit' onClick={()=>handleLogIn()}>Login</Button>
         </Link>
         <Link to='/'>
           <Button className='m-1' variant='primary'>Create Account</Button>
