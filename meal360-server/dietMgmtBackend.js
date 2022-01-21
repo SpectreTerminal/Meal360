@@ -22,7 +22,7 @@ export const sendNewPrefs = async (userParams, id) => {
  * Ensure that all calls made to this function use the **await** keyword.
  * Example: **let response = await getPrefs(...)**
  * 
- * @param {string} email User's email, the identifier
+ * @param {string} id User's email, the identifier
  * @returns {object} User's dietary preferences, as a JSON object literal
  */
 export const getPrefs = async id => {
