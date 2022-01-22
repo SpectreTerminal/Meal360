@@ -14,24 +14,24 @@ app.use(bodyParser.json());
 
 // stack API endpoints here
 // login endpoints
-app.get("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
     res.json({
         status: await authenticateUser(req.body.email, req.body.password)
     });
 });
 
-app.post("/login", async (req, res) => {
+app.post("/register", async (req, res) => {
     registerUser(req.body.email, req.body.password);
 })
 
 // diet mgmt endpoints
-app.get("/dietMgmt", async (req, res) => {
+app.post("/retrievePrefs", async (req, res) => {
     res.json({
         preferences: await getPrefs(req.body.email)
     });
 });
 
-app.post("/dietMgmt", async (req, res) => {
+app.post("/setPrefs", async (req, res) => {
     res.json({
         preferences: await sendNewPrefs(req.body.params, req.body.email)
     });
@@ -42,3 +42,8 @@ app.post("/dietMgmt", async (req, res) => {
 // meal plan generation endpoints
 
 // recipe generation endpoints
+
+
+app.listen(PORT, () => {
+    console.log(`Node Server active at ${PORT}`);
+})
