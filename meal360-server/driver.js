@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { authenticateUser, registerUser } from './loginBackend.js';
 import { getPrefs, sendNewPrefs } from './dietMgmtBackend.js';
+import { generateMealPlan } from './mealPlanGen.js';
+import { generateRecipe } from './recipeGen.js';
 
 
 // port to listen on: 3001
@@ -41,9 +43,18 @@ app.post("/setPrefs", async (req, res) => {
 // meal history endpoints
 
 // meal plan generation endpoints
+app.post("/genNewMP", async (req, res) => {
+    res.json({
+        mealplan: await generateMealPlan(req.body.timeFrame, req.body.diet, req.body.exclude, req.body.targetCalories)
+    });
+});
 
 // recipe generation endpoints
-
+app.post("/genRecipe", async(req, res) => {
+    res.json({
+        recipes: await generateRecipe(req.body.diet, req.body.excludeIngredients, req.body.intolerances)
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Node Server active at ${PORT}`);

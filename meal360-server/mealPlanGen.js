@@ -1,4 +1,4 @@
-import { sendToAPI } from "./extCommMod";
+import { sendToAPI } from "./extCommMod.js";
 
 /**
  * Generates user's meal plan based on user's dietary preferences
@@ -9,19 +9,16 @@ import { sendToAPI } from "./extCommMod";
  * @param {String} diet - Diet type for the meal plan
  * @param {String} exclude - Excluded ingredients for the meal plan
  * @param {String} targetCalories - Target calories for the meal plan
- * @param {String} url - Spoonacular API URL
  * @returns {Object} Response data from the API call
  */
-function generateMealPlan(timeFrame, diet, exclude, targetCalories, url) {
+export const generateMealPlan = async (timeFrame, diet, exclude, targetCalories) => {
     const params = {
         timeFrame,
         diet,
         exclude,
         targetCalories
     };
-    const response = sendToAPI(url, params);
+
+    const response = await sendToAPI("https://api.spoonacular.com/mealplanner/generate", params);
     return response;
 }
-
-export { generateMealPlan }; // export the function
-
