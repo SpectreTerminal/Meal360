@@ -15,14 +15,12 @@ app.use(bodyParser.json());
 // stack API endpoints here
 // login endpoints
 app.post("/login", async (req, res) => {
-    console.log(req.body);
     res.json({
         status: await authenticateUser(req.body.email, req.body.password)
     });
 });
 
 app.post("/register", async (req, res) => {
-    console.log(req.body);
     registerUser(req.body.email, req.body.password);
 })
 
@@ -46,6 +44,7 @@ app.post("/setPrefs", async (req, res) => {
 
 // recipe generation endpoints
 
+
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+    console.log(`Node Server active at ${PORT}`);
+})
