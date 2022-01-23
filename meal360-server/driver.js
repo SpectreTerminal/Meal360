@@ -4,6 +4,7 @@ import { authenticateUser, registerUser } from './loginBackend.js';
 import { getPrefs, sendNewPrefs } from './dietMgmtBackend.js';
 import { generateMealPlan } from './mealPlanGen.js';
 import { generateRecipe } from './recipeGen.js';
+import { deleteMealHistory, getMealHistory, storeMeal, updateMealHistory } from './mealHistory.js';
 
 
 // port to listen on: 3001
@@ -41,6 +42,23 @@ app.post("/setPrefs", async (req, res) => {
 
 
 // meal history endpoints
+app.post("/getMealHist", async (req, res) => {
+    res.json({
+        history: await getMealHistory(req.body.attributes, req.body.operators, req.body.values)
+    });
+});
+
+app.post("/postMealHist", async (req, res) => {
+    storeMeal(req.body.params);
+});
+
+app.put("/updateMealHist", async (req, res) => {
+    updateMealHistory(req.body.attributes, req.body.operators, req.body.values, req.body.params);
+});
+
+app.delete("/delMealHist", async (req, res) => {
+    deleteMealHistory(req.body.attributes, req.body.operators, req.body.values);
+});
 
 // meal plan generation endpoints
 app.post("/genNewMP", async (req, res) => {
@@ -58,4 +76,4 @@ app.post("/genRecipe", async(req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Node Server active at ${PORT}`);
-})
+});
