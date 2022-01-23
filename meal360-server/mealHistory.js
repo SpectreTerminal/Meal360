@@ -6,8 +6,10 @@ import { postDB, getFromDB, updateDB, deleteRecord } from "./extCommMod.js";
  * @param {string} id Unique identifier
  * @param {object} params JSON object literal of attributes of the meal
  */
-export const storeMeal = async (id, params) => {
-    postDB("meal-history", id, params);
+export const storeMeal = async (params) => {
+    let randomID = () => { return Math.random().toString(36).substr(2, 10); }
+    const output = randomID() + randomID(); 
+    postDB("meal-history", output, params);
 }
 
 /**
