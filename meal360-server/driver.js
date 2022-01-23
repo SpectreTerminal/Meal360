@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import { authenticateUser, registerUser } from './loginBackend.js';
 import { getPrefs, sendNewPrefs } from './dietMgmtBackend.js';
 import { generateMealPlan } from './mealPlanGen.js';
-import { generateRecipe } from './recipeGen.js';
+import { generateRecipe, getRecipeInfo } from './recipeGen.js';
 import { deleteMealHistory, getMealHistory, storeMeal, updateMealHistory } from './mealHistory.js';
 
 
@@ -74,6 +74,13 @@ app.post("/genRecipe", async(req, res) => {
     });
 });
 
+app.post("/getRecipeInfo", async (req, res) => {
+    res.json({
+        recipeDetails: await getRecipeInfo(req.body.id)
+    });
+});
+
+// server listener
 app.listen(PORT, () => {
     console.log(`Node Server active at ${PORT}`);
 });
