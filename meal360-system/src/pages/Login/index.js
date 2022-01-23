@@ -2,13 +2,11 @@ import { Button, Navbar, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-
-
 export default function LoginPage() {
   let email = "";
   let password = "";
   let logSuccess = false;
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   async function handleLogIn() {
     console.log('login');
@@ -32,8 +30,9 @@ export default function LoginPage() {
     .catch((error) => {
       console.error('Error:', error);
     });
+    console.log("out here");
     if (logSuccess) {
-      //navigate('/');
+      navigate('/');
     }
   }
 
@@ -90,7 +89,7 @@ export default function LoginPage() {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" onChange={updatePassword}/>
         </Form.Group>
-        <Button variant='primary' type='submit' onClick={()=>handleLogIn()}>Login</Button>
+        <Button variant='primary' onClick={()=>handleLogIn()}>Login</Button>
         <Button className='m-1' variant='primary' onClick={()=>handleCreateAccount()}>Create Account</Button>
       </Form>
     </Card>
