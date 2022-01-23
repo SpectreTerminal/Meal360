@@ -1,18 +1,19 @@
 import { Button, Navbar, Container, Card, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-//import { authenticateUser } from '../../backend/loginBackend.js'
-//Test 
+
+
 
 export default function LoginPage() {
   let email = "";
   let password = "";
+  let logSuccess = false;
+  //const navigate = useNavigate();
 
   async function handleLogIn() {
     console.log('login');
     const data = { 'email': email, 'password': password };
     const response = await fetch('/login', {
-      //mode: 'no-cors',
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -22,12 +23,18 @@ export default function LoginPage() {
     .then(response => response.json())
     .then(data => {
       console.log('Success:', data);
+      if (data.status) {
+        logSuccess = true;
+      } else {
+        alert("Invalid Login");
+      };
     })
     .catch((error) => {
       console.error('Error:', error);
     });
-
-    console.log(response.status);
+    if (logSuccess) {
+      //navigate('/');
+    }
   }
 
   async function handleCreateAccount() {
@@ -42,6 +49,7 @@ export default function LoginPage() {
     .then(response => response.json())
     .then(data => {
       console.log('Success:', data);
+      alert("New account created");
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -82,12 +90,8 @@ export default function LoginPage() {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" onChange={updatePassword}/>
         </Form.Group>
-        <Link to='/'>
-          <Button variant='primary' type='submit' onClick={()=>handleLogIn()}>Login</Button>
-        </Link>
-        <Link to='/'>
-          <Button className='m-1' variant='primary' onClick={()=>handleCreateAccount()}>Create Account</Button>
-        </Link>
+        <Button variant='primary' type='submit' onClick={()=>handleLogIn()}>Login</Button>
+        <Button className='m-1' variant='primary' onClick={()=>handleCreateAccount()}>Create Account</Button>
       </Form>
     </Card>
     </Container></>
