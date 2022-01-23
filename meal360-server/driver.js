@@ -9,36 +9,43 @@ const PORT = 3001;
 
 // assign app to express
 const app = express();
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // stack API endpoints here
 // login endpoints
-app.get("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
+    console.log(req.body);
     res.json({
         status: await authenticateUser(req.body.email, req.body.password)
     });
 });
 
-app.post("/login", async (req, res) => {
+app.post("/register", async (req, res) => {
+    console.log(req.body);
     registerUser(req.body.email, req.body.password);
 })
 
 // diet mgmt endpoints
-app.get("/dietMgmt", async (req, res) => {
+app.post("/retrievePrefs", async (req, res) => {
     res.json({
         preferences: await getPrefs(req.body.email)
     });
 });
 
-app.post("/dietMgmt", async (req, res) => {
+app.post("/setPrefs", async (req, res) => {
     res.json({
         preferences: await sendNewPrefs(req.body.params, req.body.email)
     });
 });
+
 
 // meal history endpoints
 
 // meal plan generation endpoints
 
 // recipe generation endpoints
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});

@@ -1,16 +1,53 @@
 import { Button, Navbar, Container, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import axios from 'axios';
 //import { authenticateUser } from '../../backend/loginBackend.js'
 //Test 
 
 export default function LoginPage() {
-
   let email = "";
   let password = "";
-  function handleLogIn() {
-    console.log(email)
-    console.log(password)
+
+  async function handleLogIn() {
+    console.log('login');
+    const data = { 'email': email, 'password': password };
+    const response = await fetch('/login', {
+      //mode: 'no-cors',
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data), 
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+    console.log(response.status);
+  }
+
+  async function handleCreateAccount() {
+    const data = { 'email': email, 'password': password };
+    const response = await fetch('/register', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data), 
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+    console.log(response);
   }
 
   function updateEmail(event) {
@@ -49,7 +86,7 @@ export default function LoginPage() {
           <Button variant='primary' type='submit' onClick={()=>handleLogIn()}>Login</Button>
         </Link>
         <Link to='/'>
-          <Button className='m-1' variant='primary'>Create Account</Button>
+          <Button className='m-1' variant='primary' onClick={()=>handleCreateAccount()}>Create Account</Button>
         </Link>
       </Form>
     </Card>
