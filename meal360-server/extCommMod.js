@@ -93,7 +93,7 @@ export const updateDB = async (schema, attributes, operators, values, params) =>
 
     // For each ID, update the corresponding record with the new parameters
     for(let i = 0; i < ids.length; i++){
-        const dbRef = doc(db, schema, id);
+        const dbRef = doc(db, schema, ids[i]);
         // PUT
         await updateDoc(dbRef, params);
     }
@@ -116,7 +116,7 @@ export const deleteRecord = async (schema, attributes, operators, values) => {
 
     // For each ID, delete the corresponding record from the schema
     for(let i = 0; i < ids.length; i++) {
-        const dbRef = doc(db, schema, id);
+        const dbRef = doc(db, schema, ids[i]);
         // DELETE
         await deleteDoc(dbRef);
     }
