@@ -8,16 +8,14 @@ import { sendToAPI } from "./extCommMod.js";
  * @param {String} diet - Diet type for the meal plan
  * @param {String} excludeIngredients - Excluded ingredients for the meal plan
  * @param {String} intolerances - Intolerances for the meal plan
- * @param {String} url - Spoonacular API URL
- * API call: https://api.spoonacular.com/recipes/complexSearch
  * @returns {Object} Response data from the API call
  */
-export async function generateRecipe(diet, excludeIngredients, intolerances, url) {
+export async function generateRecipe(diet, excludeIngredients, intolerances) {
     const params = {
         diet,
         excludeIngredients,
         intolerances
     };
-    const response = await sendToAPI(url, params);
+    const response = await sendToAPI("https://api.spoonacular.com/recipes/complexSearch", params);
     return response;
 }
