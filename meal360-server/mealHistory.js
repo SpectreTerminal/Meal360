@@ -3,7 +3,6 @@ import { postDB, getFromDB, updateDB, deleteRecord } from "./extCommMod.js";
 /**
  * Stores user's meal history in the database.
  * 
- * @param {string} id Unique identifier
  * @param {object} params JSON object literal of attributes of the meal
  */
 export const storeMeal = async (params) => {
