@@ -1,354 +1,48 @@
 import { Card, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AppNavbar from "../../components/navbar";
+import { useEffect, useState } from "react";
 
 export default function WeeklyMealPlanPage() {
 
-  const meals = [
-    {
-      dayOfWeek: 'Sunday',
-      date: 'January 16, 2022',
-      breakfast: {
-        name: 'Omellete',
-        calories: 50,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      lunch: {
-        name: 'Chickpea and Seeds Sandwich',
-        calories: 220,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      dinner: {
-        name: 'Shrimp Scampi',
-        calories: 250,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-    },
-    {
-      dayOfWeek: 'Monday',
-      date: 'January 17, 2022',
-      breakfast: {
-        name: 'Omellete',
-        calories: 50,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      lunch: {
-        name: 'Chickpea and Seeds Sandwich',
-        calories: 220,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      dinner: {
-        name: 'Shrimp Scampi',
-        calories: 250,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-    },
-    {
-      dayOfWeek: 'Tuesday',
-      date: 'January 18, 2022',
-      breakfast: {
-        name: 'Omellete',
-        calories: 50,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      lunch: {
-        name: 'Chickpea and Seeds Sandwich',
-        calories: 220,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      dinner: {
-        name: 'Shrimp Scampi',
-        calories: 250,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-    },
-    {
-      dayOfWeek: 'Wednesday',
-      date: 'January 19, 2022',
-      breakfast: {
-        name: 'Omellete',
-        calories: 50,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      lunch: {
-        name: 'Chickpea and Seeds Sandwich',
-        calories: 220,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      dinner: {
-        name: 'Shrimp Scampi',
-        calories: 250,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-    },
-    {
-      dayOfWeek: 'Thursday',
-      date: 'January 20, 2022',
-      breakfast: {
-        name: 'Omellete',
-        calories: 50,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      lunch: {
-        name: 'Chickpea and Seeds Sandwich',
-        calories: 220,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      dinner: {
-        name: 'Shrimp Scampi',
-        calories: 250,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-    },
-    {
-      dayOfWeek: 'Friday',
-      date: 'January 20, 2022',
-      breakfast: {
-        name: 'Omellete',
-        calories: 50,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      lunch: {
-        name: 'Chickpea and Seeds Sandwich',
-        calories: 220,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      dinner: {
-        name: 'Shrimp Scampi',
-        calories: 250,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-    },
-    {
-      dayOfWeek: 'Saturday',
-      date: 'January 21, 2022',
-      breakfast: {
-        name: 'Omellete',
-        calories: 50,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      lunch: {
-        name: 'Chickpea and Seeds Sandwich',
-        calories: 220,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
-      dinner: {
-        name: 'Shrimp Scampi',
-        calories: 250,
-        ingredients: ['4 eggs', '1 tsp milk', 'pinch of salt', '1 tsp black pepper', '1 tbsp oil or butter'],
-        instructions: [
-          'In a small bowl, break the eggs and pour the yolk and eggwhites.',
-          'Add milk. This will make your omellete puffier.',
-          'Add salt.',
-          'Add black pepper',
-          'Using a whisk or a fork, mix all the ingredients in the bowl.',
-          'Heat up a pan and add oil or butter.',
-          'Add the egg mixture to the pan. Let it heat up for 3-4 min.',
-          'Serve.'
-        ]
-      }, 
+  const [mealplan, setMealplan] = useState([])
+
+  useEffect(() => {
+    // timeFrame, diet, exclude, targetCalories
+    const data = {
+      'timeFrame': 'week', 
+      'diet': 'vegetarian',
+      'exclude': 'tomato', 
+      'targetCalories': 2000
     }
-  ]
+
+    const response = fetch('/genNewMP', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      saveMealPlan(data);
+    })
+    .catch(error => {
+      console.log('Error: ', error); 
+    })
+  }, [])
+
+  const saveMealPlan = data => {
+    const mp = []
+    mp.push({'day': 'Sunday', 'meals': data.mealplan.week.sunday.meals})
+    mp.push({'day': 'Monday', 'meals': data.mealplan.week.monday.meals})
+    mp.push({'day': 'Tuesday', 'meals': data.mealplan.week.tuesday.meals})
+    mp.push({'day': 'Wednesday', 'meals': data.mealplan.week.wednesday.meals})
+    mp.push({'day': 'Thursday', 'meals': data.mealplan.week.thursday.meals})
+    mp.push({'day': 'Friday', 'meals': data.mealplan.week.friday.meals})
+    mp.push({'day': 'Saturday', 'meals': data.mealplan.week.saturday.meals})
+    setMealplan(mp)
+  }
 
   return (<>
     <AppNavbar active={'weeklyMealPlanPage'}/>
@@ -356,43 +50,40 @@ export default function WeeklyMealPlanPage() {
     <Container>
       <h1 className="text-secondary">Weekly Meal Plan</h1>
       <Row>
-        {meals.map(meal => (<Col sm>
+        {mealplan.map(day => (<Col sm key={day.day}>
           <Card style={{width: '15rem'}}>
             <Card.Body>
-              <Card.Title className="text-primary">{meal.dayOfWeek}</Card.Title>
-              <Card.Subtitle>{meal.date}</Card.Subtitle>
+              <Card.Title className="text-primary">{day.day}</Card.Title>
+              {/* <Card.Subtitle>{meal.date}</Card.Subtitle> */}
             </Card.Body>
           </Card>
           <Link to='/recipe' 
             style={{textDecoration: 'none', color: 'inherit'}}
-            state={{ meal: meal.breakfast }}  
+            state={{ meal: day.meals[0] }}  
           >
             <Card style={{width: '15rem'}}>
               <Card.Body>
-                <Card.Title>{meal.breakfast.name}</Card.Title>
-                <Card.Subtitle>Breakfast</Card.Subtitle>
+                <Card.Title>{day.meals[0].title}</Card.Title>
               </Card.Body>
             </Card>
           </Link>
           <Link to='/recipe' 
             style={{textDecoration: 'none', color: 'inherit'}}
-            state={{ meal: meal.lunch }}  
+            state={{ meal: day.meals[1] }}  
           >
             <Card style={{width: '15rem'}}>
               <Card.Body>
-                <Card.Title>{meal.lunch.name}</Card.Title>
-                <Card.Subtitle>Lunch</Card.Subtitle>
+                <Card.Title>{day.meals[1].title}</Card.Title>
               </Card.Body>
             </Card>
           </Link>
           <Link to='/recipe' 
             style={{textDecoration: 'none', color: 'inherit'}}
-            state={{ meal: meal.dinner }}  
+            state={{ meal: day.meals[2] }}  
           >
             <Card style={{width: '15rem'}}>
               <Card.Body>
-                <Card.Title>{meal.dinner.name}</Card.Title>
-                <Card.Subtitle>Dinner</Card.Subtitle>
+                <Card.Title>{day.meals[2].title}</Card.Title>
               </Card.Body>
             </Card>
           </Link>
