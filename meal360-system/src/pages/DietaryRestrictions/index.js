@@ -2,8 +2,11 @@ import { Button, Navbar, Nav, Container, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AppNavbar from "../../components/navbar";
+import { store } from "../Login/index";
 
 export default function DietaryRestrictionsPage() {
+  const globEmail = store.useState("email")[0];
+
   let diet = "No Diet";
   let calories = "3000";
   let exclude = [""];
@@ -14,7 +17,7 @@ export default function DietaryRestrictionsPage() {
 
   function setDisplay() {
     console.log('setDisplay');
-    const data = { 'email': 'green@gmail.com' };
+    const data = { 'email': globEmail };
     const response = fetch('/retrievePrefs', {
       method: 'POST', 
       headers: {
@@ -35,10 +38,10 @@ export default function DietaryRestrictionsPage() {
   };
 
   async function handleApply() {
-    console.log('apply');
-    const data = { 'email': "green@gmail.com", 
+    console.log(globEmail);
+    const data = { 'email': globEmail, 
                     'params': {
-                      'email': "green@gmail.com",
+                      'email': globEmail,
                       'diet': diet,
                       'exclude': exclude,
                       'targetCalories': calories,

@@ -1,12 +1,19 @@
 import { Button, Navbar, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { createStore } from 'state-pool';
+
+const store = createStore();
+export {store};
+store.setState("email", "");
 
 export default function LoginPage() {
   let email = "";
   let password = "";
   let logSuccess = false;
   const navigate = useNavigate();
+
+  const [globEmail, setGlobEmail] = store.useState("email");
 
   async function handleLogIn() {
     console.log('login');
@@ -23,6 +30,7 @@ export default function LoginPage() {
       console.log('Success:', data);
       if (data.status) {
         logSuccess = true;
+        store.setState("email", email);
       } else {
         alert("Invalid Login");
       };
