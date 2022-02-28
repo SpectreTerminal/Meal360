@@ -28,6 +28,10 @@ export const sendNewPrefs = async (userParams, id) => {
 export const getPrefs = async id => {
     const response = await getFromDB("dietPref", ["email"], ["=="], [id]);
     const docs = response.docs;
+    if (docs.length === 0) {
+        console.log("No preferences found for user: " + id);
+        return null;
+    }
     const data = docs[0].data();
     return data;
 }

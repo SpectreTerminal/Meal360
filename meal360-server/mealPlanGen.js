@@ -12,10 +12,18 @@ import { getPrefs } from "./dietMgmtBackend.js";
  */
 export const generateWeeklyMealPlan = async (email) => {
     const timeFrame = "week";
+    var diet;
+    var exclude;
+    var targetCalories;
     let dietInfo = await getPrefs(email);
-    const diet = dietInfo.dietType;
-    const exclude = dietInfo.exclude;
-    const targetCalories = dietInfo.targetCalories;
+    if (dietInfo !== null) {
+        diet = dietInfo.dietType;
+        exclude = dietInfo.exclude;
+        targetCalories = dietInfo.targetCalories;
+    } else {
+        console.log("No preferences found for user: " + email);
+        return null;
+    }
     const numDays = 7;
 
     const params = {
