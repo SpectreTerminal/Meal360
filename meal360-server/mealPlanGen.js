@@ -1,6 +1,6 @@
-import { sendToAPI } from "./extCommMod.js";
-import { postDB, getFromDB, updateDB } from "./extCommMod.js";
+import { sendToAPI, postDB, getFromDB, updateDB } from "./extCommMod.js";
 import { getPrefs } from "./dietMgmtBackend.js";
+import { updateMealHistory } from "./mealHistory.js";
 
 /**
  * Generates user's meal plan based on user's dietary preferences
@@ -86,6 +86,7 @@ export const storeMealPlan = async (mealPlan) => {
     let randomID = () => { return Math.random().toString(36).substr(2, 10); }
     const output = randomID() + randomID(); 
     postDB("meal-plan", output, mealPlan);
+    return;
 }
 
 /**
@@ -98,20 +99,35 @@ export const deleteMealPlanDay = async (email, day) => {
     let currmeal = await fetchMealPlan(email).then(function(response) {
         // console.log(response.meals.week.monday);
         if (day === "monday") {
+            let monday = response.meals.week.monday;
+            updateMealHistory(["email"], ["=="], [email], {monday});
             delete response.meals.week.monday;
         } else if (day === "tuesday") {
+            let tuesday = response.meals.week.tuesday;
+            updateMealHistory(["email"], ["=="], [email], {tuesday});
             delete response.meals.week.tuesday;
         } else if (day === "wednesday") {
+            let wednesday = response.meals.week.wednesday;
+            updateMealHistory(["email"], ["=="], [email], {wednesday});
             delete response.meals.week.wednesday;
         } else if (day === "thursday") {
+            let thursday = response.meals.week.thursday;
+            updateMealHistory(["email"], ["=="], [email], {thursday});
             delete response.meals.week.thursday;
         } else if (day === "friday") {
+            let friday = response.meals.week.friday;
+            updateMealHistory(["email"], ["=="], [email], {friday});
             delete response.meals.week.friday;
         } else if (day === "saturday") {
+            let saturday = response.meals.week.saturday;
+            updateMealHistory(["email"], ["=="], [email], {saturday});
             delete response.meals.week.saturday;
         } else if (day === "sunday") {
+            let sunday = response.meals.week.sunday;
+            updateMealHistory(["email"], ["=="], [email], {sunday});
             delete response.meals.week.sunday;
         }
         updateDB("meal-plan", ["email"], ["=="], [email], {"meals": response.meals, "mealsLeft": response.mealsLeft - 1});
     });
+    return;
 }
