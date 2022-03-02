@@ -7,7 +7,7 @@ import { postDB, getFromDB, updateDB, deleteRecord } from "./extCommMod.js";
  */
 export const storeMeal = async (params) => {
     let randomID = () => { return Math.random().toString(36).substr(2, 10); }
-    const output = randomID() + randomID(); 
+    const output = randomID() + randomID();
     postDB("meal-history", output, params);
 }
 
@@ -24,7 +24,8 @@ export const getMealHistory = async (attributes, operators, values) => {
     const response = await getFromDB("meal-history", attributes, operators, values);
     const docs = response.docs;
     if(docs.length === 0) {
-        throw new Error("Meal history not found");
+        console.log("No meal history found");
+        return null;
     }
     const records = [];
     for (let index = 0; index < docs.length; index++) {
@@ -53,5 +54,23 @@ export const deleteMealHistory = async (attributes, operators, values) => {
  * @param {object} params Attributes to update for the user's meal
  */
 export const updateMealHistory = async (attributes, operators, values, params) => {
-    updateDB("meal-history", attributes, operators, values, params);
+    let currMeal = await getMealHistory(attributes, operators, values);
+    if (currMeal === null) {
+        console.log("No meal history found");
+        const email = { email: values[0] };
+        let mealData = { 
+            mealData : params 
+        };
+        let finalRes = Object.assign(email, mealData);
+        // console.log(finalRes);
+        storeMeal(finalRes);
+        return;
+    } else {
+        console.log("Meal history found");
+        let finalRes = Object.assign(currMeal[0].mealData, params);
+        currMeal[0].mealData = finalRes;
+        // console.log(currMeal[0].mealData);
+        updateDB("meal-history", attributes, operators, values, currMeal[0]);
+        return;
+    }
 }
