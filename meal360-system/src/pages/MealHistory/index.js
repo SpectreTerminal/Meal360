@@ -10,9 +10,9 @@ export default function MealHistoryPage() {
   useEffect(() => {
     // timeFrame, diet, exclude, targetCalories
     console.log("hi");
-    const data = { 'attributes': "1",
-                    'operators': '2',
-                    'values': '3',
+    const data = { 'attributes': [],
+                    'operators': [],
+                    'values': [],
                   };
 
     const response = fetch('/getMealHist', {
@@ -24,7 +24,8 @@ export default function MealHistoryPage() {
     })
     .then(response => response.json())
     .then(data => {
-      getMealHistory(data);
+      getMealHistory(data.history.history);
+      console.log(data);
       console.log("yo");
     })
     .catch(error => {

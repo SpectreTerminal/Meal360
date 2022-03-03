@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { authenticateUser, registerUser } from './loginBackend.js';
 import { getPrefs, sendNewPrefs } from './dietMgmtBackend.js';
-import { generateMealPlan } from './mealPlanGen.js';
+import { generateWeeklyMealPlan } from './mealPlanGen.js';
 import { generateRecipe, getRecipeInfo } from './recipeGen.js';
 import { deleteMealHistory, getMealHistory, storeMeal, updateMealHistory } from './mealHistory.js';
 
@@ -63,7 +63,7 @@ app.delete("/delMealHist", async (req, res) => {
 // meal plan generation endpoints
 app.post("/genNewMP", async (req, res) => {
     res.json({
-        mealplan: await generateMealPlan(req.body.timeFrame, req.body.diet, req.body.exclude, req.body.targetCalories)
+        mealplan: await generateWeeklyMealPlan(req.body.timeFrame, req.body.diet, req.body.exclude, req.body.targetCalories)
     });
 });
 

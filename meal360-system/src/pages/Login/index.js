@@ -80,6 +80,7 @@ export default function LoginPage() {
         <Navbar.Brand href="#">Meal360</Navbar.Brand>
       </Container>
     </Navbar>
+    <br/>
     
     <Container>
     <h1 className="text-secondary">Login / Create Account</h1>

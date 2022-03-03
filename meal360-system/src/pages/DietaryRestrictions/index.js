@@ -11,12 +11,15 @@ export default function DietaryRestrictionsPage() {
   let calories = "3000";
   let exclude = [""];
 
+  //initialize display variable states
   const [sdiet, setDiet] = useState("");
   const [scalories, setCalories] = useState("");
   const [sexclude, setExclude] = useState([""]);
 
+  //function to retrieve and display diet preferences
   function setDisplay() {
     console.log('setDisplay');
+    console.log(globEmail)
     const data = { 'email': globEmail };
     const response = fetch('/retrievePrefs', {
       method: 'POST', 
@@ -37,8 +40,8 @@ export default function DietaryRestrictionsPage() {
     })
   };
 
+  //called when apply is clicked, 
   async function handleApply() {
-    console.log(globEmail);
     const data = { 'email': globEmail, 
                     'params': {
                       'email': globEmail,
@@ -47,6 +50,8 @@ export default function DietaryRestrictionsPage() {
                       'targetCalories': calories,
                     },
                  };
+
+    //api call to set dietary preferences
     const response = await fetch('/setPrefs', {
       method: 'POST', // or 'PUT'
       headers: {
@@ -65,6 +70,7 @@ export default function DietaryRestrictionsPage() {
     });
   }
 
+  //updates form values on change
   function updateDiet(event) {
     diet = event.target.value
   }
@@ -77,6 +83,7 @@ export default function DietaryRestrictionsPage() {
     exclude = event.target.value.split(', ');
   }
 
+  // called once on load, sets the display of diet preferences
   useEffect(() => {
     setDisplay();
   }, []);
