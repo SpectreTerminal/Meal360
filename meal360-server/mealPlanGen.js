@@ -136,5 +136,5 @@ export const deleteMealPlanDay = async (email, day) => {
         }
         updateDB("meal-plan", ["email"], ["=="], [email], {"meals": response.meals, "mealsLeft": response.mealsLeft - 1});
     });
-    return;
+    return 'success';
 }

@@ -1,12 +1,21 @@
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AppNavbar from "../../components/navbar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { store } from '../Login'
 
 export default function WeeklyMealPlanPage() {
 
   const [mealplan, setMealplan] = useState([])
+  const [completed, setCompleted] = useState({
+    Sunday: false, 
+    Monday: false, 
+    Tuesday: false, 
+    Wednesday: false, 
+    Thursday: false, 
+    Friday: false, 
+    Saturday: false
+  })
   const email = store.useState('email')[0]
 
   useEffect(() => {
@@ -32,14 +41,40 @@ export default function WeeklyMealPlanPage() {
 
   const saveMealPlan = data => {
     const mp = []
-    mp.push({'day': 'Sunday', 'meals': data.mealplan.meals.week.sunday.meals})
-    mp.push({'day': 'Monday', 'meals': data.mealplan.meals.week.monday.meals})
-    mp.push({'day': 'Tuesday', 'meals': data.mealplan.meals.week.tuesday.meals})
-    mp.push({'day': 'Wednesday', 'meals': data.mealplan.meals.week.wednesday.meals})
-    mp.push({'day': 'Thursday', 'meals': data.mealplan.meals.week.thursday.meals})
-    mp.push({'day': 'Friday', 'meals': data.mealplan.meals.week.friday.meals})
-    mp.push({'day': 'Saturday', 'meals': data.mealplan.meals.week.saturday.meals})
+    const meals = data.mealplan.meals.week
+    if (meals.sunday) mp.push({'day': 'Sunday', 'meals': meals.sunday.meals})
+    if (meals.monday) mp.push({'day': 'Monday', 'meals': meals.monday.meals})
+    if (meals.tuesday) mp.push({'day': 'Tuesday', 'meals': meals.tuesday.meals})
+    if (meals.wednesday) mp.push({'day': 'Wednesday', 'meals': meals.wednesday.meals})
+    if (meals.thursday) mp.push({'day': 'Thursday', 'meals': meals.thursday.meals})
+    if (meals.friday) mp.push({'day': 'Friday', 'meals': meals.friday.meals})
+    if (meals.saturday) mp.push({'day': 'Saturday', 'meals': meals.saturday.meals})
     setMealplan(mp)
+  }
+
+  const dayCompleted = day => {
+    setCompleted(completed => ({...completed, [day]: true}))
+  }
+
+  const markDayAsComplete = day => {
+    const data = {
+      email, 
+      day: day.toLowerCase()
+    }
+    const response = fetch('/delMealDay', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.result == 'success') dayCompleted(day)
+    })
+    .catch(error => {
+      console.log('Error: ', error); 
+    })
   }
 
   return (<>
@@ -48,7 +83,9 @@ export default function WeeklyMealPlanPage() {
     <Container>
       <h1 className="text-secondary">Weekly Meal Plan</h1>
       <Row>
-        {mealplan.map(day => (<Col sm key={day.day}>
+        {mealplan.map(day => (
+        completed[day.day] ? <React.Fragment key={day.day}></React.Fragment> : 
+        <Col sm key={day.day}>
           <Card style={{width: '15rem'}}>
             <Card.Body>
               <Card.Title className="text-primary">{day.day}</Card.Title>
@@ -85,7 +122,15 @@ export default function WeeklyMealPlanPage() {
               </Card.Body>
             </Card>
           </Link>
-        </Col>))}
+          <Card style={{width: '15rem'}}><Button 
+            variant="primary"
+            onClick={() => markDayAsComplete(day.day)}
+            >
+            Mark as complete
+          </Button></Card>
+          
+        </Col>
+        ))}
       </Row>
     </Container>
   </>)
