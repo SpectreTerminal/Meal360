@@ -35,7 +35,9 @@ export const generateWeeklyMealPlan = async (email) => {
 
     const mealplan = await sendToAPI("https://api.spoonacular.com/mealplanner/generate", params);
 
-    let mealAccount = fetchMealPlan(email).then(function(response) {
+    let toReturn = null
+    let mealAccount = await fetchMealPlan(email).then(function(response) {
+        
         if (response === null) {
             console.log("No meal history found");
             const finalResponse = {
@@ -46,19 +48,24 @@ export const generateWeeklyMealPlan = async (email) => {
             
             finalResponse.meals = mealplan;
             storeMealPlan(finalResponse);
+            toReturn = finalResponse;
             return finalResponse;
         }
 
         else if (response.mealsLeft === 0) {
             console.log("No meals left");
             updateDB("meal-plan", ["email"], ["=="], [email], {"meals": mealplan, "mealsLeft": numDays});
+            toReturn = response; 
             return response;
         }
         else {
             console.log("still meals left");
-            return null;
+            toReturn = response
+            return response;
         }
     });
+
+    return toReturn
 }
 
 /**

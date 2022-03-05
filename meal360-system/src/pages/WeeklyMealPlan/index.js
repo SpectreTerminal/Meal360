@@ -2,18 +2,16 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AppNavbar from "../../components/navbar";
 import { useEffect, useState } from "react";
+import { store } from '../Login'
 
 export default function WeeklyMealPlanPage() {
 
   const [mealplan, setMealplan] = useState([])
+  const email = store.useState('email')[0]
 
   useEffect(() => {
-    // timeFrame, diet, exclude, targetCalories
     const data = {
-      'timeFrame': 'week', 
-      'diet': 'vegetarian',
-      'exclude': 'tomato', 
-      'targetCalories': 2000
+      'email': email
     }
 
     const response = fetch('/genNewMP', {
@@ -23,7 +21,7 @@ export default function WeeklyMealPlanPage() {
       },
       body: JSON.stringify(data)
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
       saveMealPlan(data);
     })
@@ -34,13 +32,13 @@ export default function WeeklyMealPlanPage() {
 
   const saveMealPlan = data => {
     const mp = []
-    mp.push({'day': 'Sunday', 'meals': data.mealplan.week.sunday.meals})
-    mp.push({'day': 'Monday', 'meals': data.mealplan.week.monday.meals})
-    mp.push({'day': 'Tuesday', 'meals': data.mealplan.week.tuesday.meals})
-    mp.push({'day': 'Wednesday', 'meals': data.mealplan.week.wednesday.meals})
-    mp.push({'day': 'Thursday', 'meals': data.mealplan.week.thursday.meals})
-    mp.push({'day': 'Friday', 'meals': data.mealplan.week.friday.meals})
-    mp.push({'day': 'Saturday', 'meals': data.mealplan.week.saturday.meals})
+    mp.push({'day': 'Sunday', 'meals': data.mealplan.meals.week.sunday.meals})
+    mp.push({'day': 'Monday', 'meals': data.mealplan.meals.week.monday.meals})
+    mp.push({'day': 'Tuesday', 'meals': data.mealplan.meals.week.tuesday.meals})
+    mp.push({'day': 'Wednesday', 'meals': data.mealplan.meals.week.wednesday.meals})
+    mp.push({'day': 'Thursday', 'meals': data.mealplan.meals.week.thursday.meals})
+    mp.push({'day': 'Friday', 'meals': data.mealplan.meals.week.friday.meals})
+    mp.push({'day': 'Saturday', 'meals': data.mealplan.meals.week.saturday.meals})
     setMealplan(mp)
   }
 

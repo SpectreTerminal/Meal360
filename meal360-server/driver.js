@@ -63,7 +63,7 @@ app.delete("/delMealHist", async (req, res) => {
 // meal plan generation endpoints
 app.post("/genNewMP", async (req, res) => {
     res.json({
-        mealplan: await generateWeeklyMealPlan(req.body.timeFrame, req.body.diet, req.body.exclude, req.body.targetCalories)
+        mealplan: await generateWeeklyMealPlan(req.body.email)
     });
 });
 
