@@ -2,18 +2,17 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AppNavbar from "../../components/navbar";
 import { useEffect, useState } from "react";
+import { store } from '../Login'
 
 export default function WeeklyMealPlanPage() {
 
   const [mealplan, setMealplan] = useState([])
+  const email = store.useState('email')[0]
 
   useEffect(() => {
     // timeFrame, diet, exclude, targetCalories
     const data = {
-      'timeFrame': 'week', 
-      'diet': 'vegetarian',
-      'exclude': 'tomato', 
-      'targetCalories': 2000
+      'email': email
     }
 
     const response = fetch('/genNewMP', {
@@ -25,6 +24,7 @@ export default function WeeklyMealPlanPage() {
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data)
       saveMealPlan(data);
     })
     .catch(error => {

@@ -56,7 +56,7 @@ export const generateWeeklyMealPlan = async (email) => {
         }
         else {
             console.log("still meals left");
-            return null;
+            return response;
         }
     });
 }
