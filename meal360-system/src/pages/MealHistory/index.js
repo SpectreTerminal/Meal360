@@ -2,17 +2,17 @@ import { Button, Container, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AppNavbar from "../../components/navbar";
 import { useEffect, useState } from "react";
+import { store } from "../Login/index";
 
 export default function MealHistoryPage() {
-
+  const globEmail = store.useState("email")[0];
   const [meals, setMealHistory] = useState([])
 
   useEffect(() => {
     // timeFrame, diet, exclude, targetCalories
-    console.log("hi");
-    const data = { 'attributes': [],
-                    'operators': [],
-                    'values': [],
+    const data = { 'attributes': ["email"],
+                    'operators': ["=="],
+                    'values': [globEmail],
                   };
 
     const response = fetch('/getMealHist', {
@@ -24,9 +24,8 @@ export default function MealHistoryPage() {
     })
     .then(response => response.json())
     .then(data => {
-      getMealHistory(data.history.history);
-      console.log(data);
-      console.log("yo");
+      getMealHistory(data.history[0].mealData);
+      console.log(data.history[0].mealData.friday);
     })
     .catch(error => {
       console.log('Error: ', error); 
@@ -35,6 +34,13 @@ export default function MealHistoryPage() {
 
   const getMealHistory = data => {
     const mH = []
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        console.log('day ' + key);
+        console.log(data[key].meals);
+        mH.push({'day': key, 'meals': data[key].meals});
+      }
+    }
 
     setMealHistory(mH)
   }
@@ -45,43 +51,44 @@ export default function MealHistoryPage() {
     <Container>
       <h1 className="text-secondary">Meal History</h1>
 
-          {meals.map(meal => (<Col sm>
-
-            <Link to='/recipe' 
-              style={{textDecoration: 'none', color: 'inherit'}}
-              state={{ meal: meal.breakfast }}  
-            >
-              <Card style={{width: '15rem'}}>
-                <Card.Body>
-                  <Card.Title>{meal.breakfast.name}</Card.Title>
-                  <Card.Subtitle>Breakfast</Card.Subtitle>
-                </Card.Body>
-              </Card>
-            </Link>
-            <Link to='/recipe' 
-              style={{textDecoration: 'none', color: 'inherit'}}
-              state={{ meal: meal.lunch }}  
-            >
-              <Card style={{width: '15rem'}}>
-                <Card.Body>
-                  <Card.Title>{meal.lunch.name}</Card.Title>
-                  <Card.Subtitle>Lunch</Card.Subtitle>
-                </Card.Body>
-              </Card>
-            </Link>
-            <Link to='/recipe' 
-              style={{textDecoration: 'none', color: 'inherit'}}
-              state={{ meal: meal.dinner }}  
-            >
-              <Card style={{width: '15rem'}}>
-                <Card.Body>
-                  <Card.Title>{meal.dinner.name}</Card.Title>
-                  <Card.Subtitle>Dinner</Card.Subtitle>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>))}
-
+        {meals.map(day => (<Col sm key={day.day}>
+          <br />
+          <Card style={{width: '15rem'}}>
+            <Card.Body>
+              <Card.Title className="text-primary">{day.day}</Card.Title>
+            </Card.Body>
+          </Card>
+          <Link to='/recipe' 
+            style={{textDecoration: 'none', color: 'inherit'}}
+            state={{ meal: day.meals[0] }}  
+          >
+            <Card style={{width: '15rem'}}>
+              <Card.Body>
+                <Card.Title>{day.meals[0].title}</Card.Title>
+              </Card.Body>
+            </Card>
+          </Link>
+          <Link to='/recipe' 
+            style={{textDecoration: 'none', color: 'inherit'}}
+            state={{ meal: day.meals[1] }}  
+          >
+            <Card style={{width: '15rem'}}>
+              <Card.Body>
+                <Card.Title>{day.meals[1].title}</Card.Title>
+              </Card.Body>
+            </Card>
+          </Link>
+          <Link to='/recipe' 
+            style={{textDecoration: 'none', color: 'inherit'}}
+            state={{ meal: day.meals[2] }}  
+          >
+            <Card style={{width: '15rem'}}>
+              <Card.Body>
+                <Card.Title>{day.meals[2].title}</Card.Title>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>))}
     </Container>
 
 
