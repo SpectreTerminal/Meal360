@@ -19,10 +19,11 @@ export const authenticateUser = async (email, password) => {
  * 
  * @param {string} email User's email
  * @param {string} password User's password
+ * @param {string} name User's name
  */
-export const registerUser = async (email, password) => {
+export const registerUser = async (email, password, name) => {
     const params = {
-        email, password
+        email, password, name
     };
     await postDB("accounts", email, params);
 }

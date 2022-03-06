@@ -24,7 +24,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-    registerUser(req.body.email, req.body.password);
+    registerUser(req.body.email, req.body.password, req.body.name);
 })
 
 // diet mgmt endpoints
