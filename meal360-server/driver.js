@@ -27,6 +27,10 @@ app.post("/register", async (req, res) => {
     registerUser(req.body.email, req.body.password, req.body.name);
 })
 
+app.post("/update", async (req, res) => {
+    updateUser(req.body.email, req.body.password, req.body.name);
+})
+
 // diet mgmt endpoints
 app.post("/retrievePrefs", async (req, res) => {
     res.json({

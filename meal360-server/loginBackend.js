@@ -1,4 +1,4 @@
-import { getFromDB, postDB } from "./extCommMod.js";
+import { getFromDB, postDB, updateDB } from "./extCommMod.js";
 
 /**
  * Authenticate a user.
@@ -26,4 +26,18 @@ export const registerUser = async (email, password, name) => {
         email, password, name
     };
     await postDB("accounts", email, params);
+}
+
+/**
+ * Update a user's password.
+ * 
+ * @param {string} email User's email
+ * @param {string} password User's password
+ * @param {string} name User's name
+ */
+export const updateUser = async (email, password, name) => {
+    const params = {
+        password, name
+    };
+    await updateDB("accounts", ['email'], ['=='], [email], params);
 }
