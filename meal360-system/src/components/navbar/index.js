@@ -12,9 +12,6 @@ export default function AppNavbar({active}) {
           <Link to='/profile' className="nav-link">
             Profile
           </Link>
-          <Link to='/dietaryRestrictions' className="nav-link">
-            Dietary Restrictions
-          </Link>
           <Link to='/weeklyMealPlan' className="nav-link">
             Weekly Meal Plan
           </Link>
