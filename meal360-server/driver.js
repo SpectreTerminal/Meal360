@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { authenticateUser, registerUser } from './loginBackend.js';
+import { authenticateUser, registerUser, updateUser, getName } from './loginBackend.js';
 import { getPrefs, sendNewPrefs } from './dietMgmtBackend.js';
 import { generateWeeklyMealPlan, deleteMealPlanDay } from './mealPlanGen.js';
 import { generateRecipe, getRecipeInfo } from './recipeGen.js';
@@ -24,12 +24,22 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-    registerUser(req.body.email, req.body.password, req.body.name);
+    res.json({
+        status: await registerUser(req.body.email, req.body.password, req.body.name)
+    })
 })
 
 app.post("/update", async (req, res) => {
-    updateUser(req.body.email, req.body.password, req.body.name);
+    res.json({
+        status: await updateUser(req.body.email, req.body.name)
+    })
 })
+
+app.post("/getName", async (req, res) => {
+    res.json({
+        name: await getName(req.body.email)
+    });
+});
 
 // diet mgmt endpoints
 app.post("/retrievePrefs", async (req, res) => {

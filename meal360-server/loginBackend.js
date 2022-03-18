@@ -23,21 +23,31 @@ export const authenticateUser = async (email, password) => {
  */
 export const registerUser = async (email, password, name) => {
     const params = {
-        email, password, name
+        email, password, name: name ? name : ""
     };
     await postDB("accounts", email, params);
+    return true; 
 }
 
 /**
  * Update a user's password.
  * 
  * @param {string} email User's email
- * @param {string} password User's password
  * @param {string} name User's name
  */
-export const updateUser = async (email, password, name) => {
-    const params = {
-        password, name
-    };
+export const updateUser = async (email, name) => {
+    const params = { name };
     await updateDB("accounts", ['email'], ['=='], [email], params);
+    return true; 
+}
+
+export const getName = async (email) => {
+    const response = await getFromDB("accounts", ["email"], ["=="], [email]);
+    const docs = response.docs;
+    if (docs.length === 0) {
+        console.log("No preferences found for user: " + email);
+        return null;
+    }
+    const data = docs[0].data().name;
+    return data;
 }
