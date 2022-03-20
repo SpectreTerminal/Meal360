@@ -28,12 +28,12 @@ export default function DietaryRestrictionsPage() {
     })
     .then(response => response.json())
     .then(data => {
-      setDisplayDiet(data.preferences.diet)
-      setDisplayCalories(data.preferences.targetCalories)
-      setDisplayExclude(data.preferences.exclude.join(", "))
-      setDiet(data.preferences.diet)
-      setCalories(data.preferences.targetCalories)
-      setExclude(data.preferences.exclude.join(", "))
+      setDisplayDiet(data.preferences.diet);
+      setDisplayCalories(data.preferences.targetCalories);
+      setDisplayExclude(data.preferences.exclude.join(", "));
+      setDiet(data.preferences.diet);
+      setCalories(data.preferences.targetCalories);
+      setExclude(data.preferences.exclude.join(", "));
     })
     .catch(error => {
       console.log('Error: ', error); 
@@ -75,13 +75,30 @@ export default function DietaryRestrictionsPage() {
       console.error('Error (name):', error);
     }); 
 
+    let calInt = parseInt(calories);
+    let dataCalories = calories;
+    if (!Number.isInteger(calInt)) {
+      setCalories('3000');
+      dataCalories = '3000';
+      alert('Target Calories must be within 1500-6000');
+    } else if (calInt > 6000) {
+      setCalories('6000');
+      dataCalories = '6000';
+      alert('Target Calories must be within 1500-6000');
+    } else if (calInt < 1500) {
+      setCalories('1500');
+      dataCalories = '1500';
+      alert('Target Calories must be within 1500-6000');
+    }
+
+    console.log(dataCalories);
     //api call to set dietary preferences
     const data = { 'email': globEmail, 
                     'params': {
                       'email': globEmail,
                       'diet': diet,
                       'exclude': exclude,
-                      'targetCalories': calories,
+                      'targetCalories': dataCalories,
                     },
                  };
 
@@ -96,7 +113,7 @@ export default function DietaryRestrictionsPage() {
     .then(data => {
       console.log('Success:', data);
       alert('Profile has been updated.');
-      setDisplayDiet(diet); setDisplayExclude(exclude); setDisplayCalories(calories)
+      setDisplayDiet(diet); setDisplayExclude(exclude); setDisplayCalories(dataCalories)
     })
     .catch((error) => {
       console.error('Error:', error);

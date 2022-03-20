@@ -38,7 +38,6 @@ export default function LoginPage() {
     .catch((error) => {
       console.error('Error:', error);
     });
-    console.log("out here");
     if (logSuccess) {
       navigate('/');
     }
@@ -56,7 +55,11 @@ export default function LoginPage() {
     .then(response => response.json())
     .then(data => {
       console.log('Success:', data);
-      alert("New account created");
+      if (data.status) {
+        alert("New account created");
+      } else {
+        alert("Email is already in use");
+      };
     })
     .catch((error) => {
       console.error('Error:', error);
