@@ -20,8 +20,16 @@ export const authenticateUser = async (email, password) => {
  * @param {string} email User's email
  * @param {string} password User's password
  * @param {string} name User's name
+ * @param {Promise<Boolean>} status True if registration was successful, false if not
  */
 export const registerUser = async (email, password, name) => {
+    const results = await getFromDB("accounts", ["email"], ["=="], [email])
+    const docs = results.docs;
+    if(docs.length > 0){
+        // account already exists with email provided
+        return false;
+    }
+    // otherwise, continue with registration
     const params = {
         email, password, name: name ? name : ""
     };
