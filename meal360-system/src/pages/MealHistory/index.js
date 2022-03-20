@@ -45,6 +45,28 @@ export default function MealHistoryPage() {
     setMealHistory(mH)
   }
 
+  const deleteMealHistory = day => {
+    const data = { 'email': globEmail,
+                    'day': day,
+                  };
+
+    const response = fetch('/delMealDay', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('deleteddd');
+      console.log(data);
+    })
+    .catch(error => {
+      console.log('Error: ', error); 
+    })
+  }
+
   return (<>
     <AppNavbar active={'mealHistory'}/>
     <br />
@@ -56,6 +78,9 @@ export default function MealHistoryPage() {
           <Card style={{width: '15rem'}}>
             <Card.Body>
               <Card.Title className="text-primary">{day.day}</Card.Title>
+              <Button className="float-right" variant="primary" onClick={() => deleteMealHistory(day.day)}>
+                Delete
+              </Button>
             </Card.Body>
           </Card>
           <Link to='/recipe' 
