@@ -25,7 +25,7 @@ app.post("/login", async (req, res) => {
 
 app.post("/register", async (req, res) => {
     res.json({
-        status: await registerUser(req.body.email, req.body.password, req.body.name)
+        status: await registerUser(req.body.email, req.body.password)
     })
 })
 

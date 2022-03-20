@@ -19,10 +19,9 @@ export const authenticateUser = async (email, password) => {
  * 
  * @param {string} email User's email
  * @param {string} password User's password
- * @param {string} name User's name
  * @param {Promise<Boolean>} status True if registration was successful, false if not
  */
-export const registerUser = async (email, password, name) => {
+export const registerUser = async (email, password) => {
     const results = await getFromDB("accounts", ["email"], ["=="], [email])
     const docs = results.docs;
     if(docs.length > 0){
@@ -31,7 +30,7 @@ export const registerUser = async (email, password, name) => {
     }
     // otherwise, continue with registration
     const params = {
-        email, password, name: name ? name : ""
+        email, password
     };
     await postDB("accounts", email, params);
     return true; 
