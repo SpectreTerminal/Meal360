@@ -1,5 +1,5 @@
 // recipe gen test
-import { getRecipeInfo, generateRecipe } from "./recipeGen.js";
+import { getRecipeInfo, generateRecipe } from "../recipeGen.js";
 
 console.log("yo");
 // 01

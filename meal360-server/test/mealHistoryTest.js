@@ -3,7 +3,7 @@ import {
   deleteMealHistory,
   updateMealHistory,
   storeMeal,
-} from "./mealHistory.js";
+} from "../mealHistory.js";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
