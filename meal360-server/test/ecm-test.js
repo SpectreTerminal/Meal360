@@ -50,3 +50,4 @@ response = await getFromDB("dietPref", ['email'], ['=='], [email]);
 docs = response.docs;
 console.log("\nTest 5 results:");
 console.log("Email " + email + " does not exist: " + (docs.length === 0));
+console.log(docs[0] == undefined);
