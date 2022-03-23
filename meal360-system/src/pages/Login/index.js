@@ -17,6 +17,10 @@ export default function LoginPage() {
 
   async function handleLogIn() {
     console.log('login');
+    if (email == "" || password == "") {
+      alert("Invalid Login");
+      return
+    }
     const data = { 'email': email, 'password': password };
     const response = await fetch('/login', {
       method: 'POST', // or 'PUT'
@@ -44,6 +48,10 @@ export default function LoginPage() {
   }
 
   async function handleCreateAccount() {
+    if (email == "" || password == "") {
+      alert("Invalid Login");
+      return
+    }
     const data = { 'email': email, 'password': password };
     const response = await fetch('/register', {
       method: 'POST', // or 'PUT'
