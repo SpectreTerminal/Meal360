@@ -10,6 +10,10 @@ import { getFromDB, postDB, updateDB } from "./extCommMod.js";
 export const authenticateUser = async (email, password) => {
     const response = await getFromDB("accounts", ['email'], ['=='], [email]);
     const docs = response.docs;
+    if(docs.length == 0){
+        // invalid email/email does not exist in database
+        return false;
+    }
     const credentials = docs[0].data();
     return (email === credentials.email && password === credentials.password);
 }
