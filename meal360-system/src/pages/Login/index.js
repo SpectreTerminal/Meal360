@@ -43,7 +43,7 @@ export default function LoginPage() {
       console.error('Error:', error);
     });
     if (logSuccess) {
-      navigate('/');
+      navigate('/home');
     }
   }
 

@@ -1,3 +1,4 @@
+import { deleteRecord } from "../extCommMod.js";
 import {
   getMealHistory,
   deleteMealHistory,
@@ -10,7 +11,7 @@ function sleep(ms) {
 }
 
 // getMealHistory tests
-let workingMeal = getMealHistory(["email"], ["=="], [""]).then(function (
+let notworkingMeal = getMealHistory(["email"], ["=="], [""]).then(function (
   response
 ) {
   console.log(
@@ -19,19 +20,23 @@ let workingMeal = getMealHistory(["email"], ["=="], [""]).then(function (
   );
 });
 
-let notWorkingMeal = getMealHistory(["email"], ["=="], ["a@a.com"]).then(
-  function (response) {
-    console.log(
-      "Meal Found! if Json object returned, True expected:",
-      response != null
-    );
-  }
-);
-
-// storeMeal tests
-let mealCheckBefore = getMealHistory(["email"], ["=="], [""]).then(function (
+let WorkingMeal = getMealHistory(["email"], ["=="], ["a@a.com"]).then(function (
   response
 ) {
+  console.log(
+    "Meal Found! if Json object returned, True expected:",
+    response != null
+  );
+});
+
+await sleep(1000);
+
+// storeMeal tests
+let mealCheckBefore = getMealHistory(
+  ["email"],
+  ["=="],
+  ["TestCase@gmail.com"]
+).then(function (response) {
   console.log(
     "Checking if meal exists before storing. if Null returned, True expected:",
     response == null
@@ -40,81 +45,84 @@ let mealCheckBefore = getMealHistory(["email"], ["=="], [""]).then(function (
 
 await sleep(1000);
 
-storeMeal({ email: "abcd@gmail.com", mealData: { meal: "chicken" } });
+storeMeal({ email: "TestCase@gmail.com", mealData: ["meal1", "meal2"] });
 
 await sleep(1000);
 
-let mealCheckAfter = getMealHistory(["email"], ["=="], ["abcd@gmail.com"]).then(
-  function (response) {
-    console.log(
-      "Checking if meal exists after storing. If Json object returned, True expected:",
-      response != null
-    );
-  }
-);
+let mealCheckAfter = getMealHistory(
+  ["email"],
+  ["=="],
+  ["TestCase@gmail.com"]
+).then(function (response) {
+  console.log(
+    "Checking if meal exists after storing. If Json object returned, True expected:",
+    response != null
+  );
+});
 
-// deleteMealHistory tests
-let mealCheckBeforeDelete = getMealHistory(["email"], ["=="], [""]).then(
-  function (response) {
-    console.log(
-      "Checking if meal exists before deleting. If Null returned, True expected:",
-      response == null
-    );
-  }
-);
+// // deleteMealHistory tests
+let mealCheckBeforeDelete = getMealHistory(
+  ["email"],
+  ["=="],
+  ["TestCase@gmail.com"]
+).then(function (response) {
+  console.log(
+    "Checking number of meals before deleting. if correct number, True expected:",
+    response[0].mealData.length == 2
+  );
+});
 
 await sleep(1000);
 
-deleteMealHistory(["email"], ["=="], ["abcd@gmail.com"]);
+deleteMealHistory(["email"], ["=="], ["TestCase@gmail.com", 1]);
 
 await sleep(1000);
 
 let mealCheckAfterDelete = getMealHistory(
   ["email"],
   ["=="],
-  ["abcd@gmail.com"]
+  ["TestCase@gmail.com"]
 ).then(function (response) {
   console.log(
-    "Checking if meal exists after deleting. If Null returned, True expected:",
-    response == null
+    "Checking if number of meals after deleting. if correct number, True expected:",
+    response[0].mealData.length == 1
   );
 });
 
 await sleep(1000);
 
-// updateMealHistory tests
-storeMeal({ email: "abcd@gmail.com", mealData: { meal: "chicken" } });
-
-await sleep(1000);
-
+// // updateMealHistory tests
 let mealCheckBeforeUpdate = getMealHistory(
   ["email"],
   ["=="],
-  ["abcd@gmail.com"]
+  ["TestCase@gmail.com"]
 ).then(function (response) {
   console.log(
-    "Checking if meal exists before updating. if mealData value is same as before, True expected:",
-    response[0].mealData.meal == "chicken"
+    "Checking number of meals before updating. if correct number, True expected:",
+    response[0].mealData.length == 1
   );
 });
 
 await sleep(1000);
 
-updateMealHistory(["email"], ["=="], ["abcd@gmail.com"], { meal: "pizza" });
+updateMealHistory(["email"], ["=="], ["TestCase@gmail.com"], {
+  meal: "pizza",
+  day: "meal",
+});
 
 await sleep(1000);
 
 let mealCheckAfterUpdate = getMealHistory(
   ["email"],
   ["=="],
-  ["abcd@gmail.com"]
+  ["TestCase@gmail.com"]
 ).then(function (response) {
   console.log(
-    "Checking if meal exists after updating. If mealData value is changed to new one, True expected:",
-    response[0].mealData.meal == "pizza"
+    "Checking number of meals after updating. if correct number, True expected:",
+    response[0].mealData.length == 2
   );
 });
 
 await sleep(1000);
 
-deleteMealHistory(["email"], ["=="], ["abcd@gmail.com"]);
+deleteRecord("meal-history", ["email"], ["=="], ["TestCase@gmail.com"]);
