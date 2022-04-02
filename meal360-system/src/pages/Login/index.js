@@ -18,7 +18,7 @@ export default function LoginPage() {
   async function handleLogIn() {
     console.log('login');
     if (email == "" || password == "") {
-      alert("Invalid Login");
+      alert("Email and password cannot be blank.");
       return
     }
     const data = { 'email': email, 'password': password };
@@ -49,7 +49,7 @@ export default function LoginPage() {
 
   async function handleCreateAccount() {
     if (email == "" || password == "") {
-      alert("Invalid Login");
+      alert("Email and password cannot be blank.");
       return
     }
     const data = { 'email': email, 'password': password };
