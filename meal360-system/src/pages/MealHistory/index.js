@@ -25,7 +25,7 @@ export default function MealHistoryPage() {
     .then(response => response.json())
     .then(data => {
       getMealHistory(data.history[0].mealData);
-      console.log(data.history[0].mealData.friday);
+      console.log(data.history[0].mealData);
     })
     .catch(error => {
       console.log('Error: ', error); 
@@ -46,12 +46,13 @@ export default function MealHistoryPage() {
   }
 
   const deleteMealHistory = day => {
-    const data = { 'email': globEmail,
-                    'day': day,
+    const data = { 'attributes': ["email"],
+                    'operators': ["=="],
+                    'values': [globEmail, day],
                   };
 
-    const response = fetch('/delMealDay', {
-      method: 'POST', 
+    const response = fetch('/delMealHist', {
+      method: 'DELETE', 
       headers: {
         'Content-Type': 'application/json'
       },
@@ -59,7 +60,7 @@ export default function MealHistoryPage() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('deleteddd');
+      console.log('deleted history');
       console.log(data);
     })
     .catch(error => {
