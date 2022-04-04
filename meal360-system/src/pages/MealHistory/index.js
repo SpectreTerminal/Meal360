@@ -6,7 +6,7 @@ import { store } from "../Login/index";
 
 export default function MealHistoryPage() {
   const globEmail = store.useState("email")[0];
-  const [meals, setMealHistory] = useState([])
+  const [meals, setMealHistory] = useState([]);
 
   useEffect(() => {
     // timeFrame, diet, exclude, targetCalories
@@ -41,7 +41,6 @@ export default function MealHistoryPage() {
         mH.push({'day': key, 'meals': data[key].meals});
       }
     }
-
     setMealHistory(mH)
   }
 
@@ -61,11 +60,15 @@ export default function MealHistoryPage() {
     .then(response => response.json())
     .then(data => {
       console.log('deleted history');
-      console.log(data);
     })
     .catch(error => {
       console.log('Error: ', error); 
     })
+
+    let mH = meals;
+    let mH2 = mH.filter((item) => item.day !== day);
+
+    setMealHistory(mH2);
   }
 
   return (<>
@@ -76,12 +79,9 @@ export default function MealHistoryPage() {
 
         {meals.map(day => (<Col sm key={day.day}>
           <br />
-          <Card style={{width: '15rem'}}>
+          <Card style={{width: '15rem', display: 'none'}}>
             <Card.Body>
               <Card.Title className="text-primary">{day.day}</Card.Title>
-              <Button className="float-right" variant="primary" onClick={() => deleteMealHistory(day.day)}>
-                Delete
-              </Button>
             </Card.Body>
           </Card>
           <Link to='/recipe' 
@@ -113,7 +113,13 @@ export default function MealHistoryPage() {
                 <Card.Title>{day.meals[2].title}</Card.Title>
               </Card.Body>
             </Card>
-          </Link>
+          </Link>          
+          <Card style={{width: '15rem'}}><Button 
+            variant="primary"
+            onClick={() => deleteMealHistory(day.day)}
+            >
+            Delete
+          </Button></Card>
         </Col>))}
     </Container>
 
